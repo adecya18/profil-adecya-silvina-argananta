@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aplikasi sederhana untuk mencatat dan mengelola data siswa.">
+  <title>Aplikasi Manajemen Data Siswa</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --latar: #eef3f7;
+      --putih: #fff;
+      --tinta: #12263a;
+      --redup: #55677a;
+      --garis: #cfdae4;
+      --biru: #2547d0;
+      --biru-gelap: #1a34a0;
+      --merah: #b42318;
+      --radius: 14px;
+      font-family: "Public Sans", "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--latar); color: var(--tinta); line-height: 1.5; }
+    button, input { font: inherit; }
+    a { color: var(--biru); }
+    .wadah { width: min(1080px, 100% - 2rem); margin: 0 auto; }
+    header { padding: 1.25rem 0; border-bottom: 1px solid var(--garis); background: var(--putih); }
+    header .wadah { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    header a { font-weight: 600; }
+    main { padding: 2.5rem 0 4rem; }
+    h1, h2 { margin: 0; line-height: 1.15; }
+    h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.04em; }
+    h2 { font-size: 1.25rem; }
+    .pengantar { color: var(--redup); margin: 0.65rem 0 1.75rem; }
+    .ringkasan { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.25rem; }
+    .jumlah { display: inline-grid; min-width: 2.3rem; min-height: 2.3rem; place-items: center; padding: 0 0.5rem; border-radius: 999px; background: var(--biru); color: var(--putih); font-weight: 700; }
+    .panel { padding: 1.4rem; border: 1px solid var(--garis); border-radius: var(--radius); background: var(--putih); }
+    .panel + .panel { margin-top: 1.25rem; }
+    form { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1rem; }
+    label { display: grid; gap: 0.4rem; font-weight: 600; }
+    input { width: 100%; padding: 0.7rem 0.8rem; border: 1px solid var(--garis); border-radius: 8px; color: var(--tinta); background: var(--putih); }
+    input:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid #8ca2ff; outline-offset: 2px; }
+    .aksi-form { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    button { min-height: 42px; padding: 0.6rem 1rem; border: 0; border-radius: 8px; background: var(--biru); color: var(--putih); cursor: pointer; font-weight: 600; }
+    button:hover { background: var(--biru-gelap); }
+    button.sekunder { border: 1px solid var(--garis); background: var(--putih); color: var(--tinta); }
+    button.sekunder:hover { background: var(--latar); }
+    button.hapus { min-height: 36px; padding: 0.4rem 0.7rem; background: var(--merah); }
+    .toolbar { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin: 1.25rem 0 0.8rem; }
+    .toolbar label { width: min(340px, 100%); }
+    .status { min-height: 1.5rem; margin: 0.8rem 0 0; color: var(--redup); }
+    .status.error { color: var(--merah); }
+    .tabel-bungkus { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td { padding: 0.8rem 0.65rem; border-bottom: 1px solid var(--garis); vertical-align: middle; }
+    th { color: var(--redup); font-size: 0.9rem; }
+    td.aksi { white-space: nowrap; }
+    td.aksi button + button { margin-left: 0.35rem; }
+    .kosong { padding: 1.5rem 0.65rem; text-align: center; color: var(--redup); }
+    @media (max-width: 700px) {
+      header .wadah { align-items: flex-start; flex-direction: column; }
+      form { grid-template-columns: 1fr; }
+      .aksi-form { grid-column: auto; }
+      .toolbar { align-items: stretch; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wadah">
+      <strong>Aplikasi Manajemen Data Siswa</strong>
+      <a href="../index.html">Kembali ke portofolio</a>
+    </div>
+  </header>
+  <main class="wadah">
+    <h1>Data Siswa</h1>
+    <p class="pengantar">Catat, cari, ubah, dan hapus data siswa. Data tersimpan di browser yang sedang digunakan.</p>
+
+    <section class="panel" aria-labelledby="judul-form">
+      <h2 id="judul-form">Tambah siswa</h2>
+      <form id="form-siswa">
+        <label for="nis">NIS
+          <input id="nis" name="nis" required inputmode="numeric" autocomplete="off" maxlength="30">
+        </label>
+        <label for="nama">Nama siswa
+          <input id="nama" name="nama" required autocomplete="name" maxlength="100">
+        </label>
+        <label for="kelas">Kelas
+          <input id="kelas" name="kelas" required autocomplete="off" maxlength="50" placeholder="Contoh: XI RPL 1">
+        </label>
+        <div class="aksi-form">
+          <button id="tombol-simpan" type="submit">Tambah siswa</button>
+          <button id="batal-edit" class="sekunder" type="button" hidden>Batal edit</button>
+        </div>
+      </form>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel" aria-labelledby="judul-daftar">
+      <div class="ringkasan">
+        <h2 id="judul-daftar">Daftar siswa</h2>
+        <span id="jumlah-siswa" class="jumlah" aria-label="Jumlah siswa">0</span>
+      </div>
+      <div class="toolbar">
+        <label for="pencarian">Cari siswa
+          <input id="pencarian" type="search" placeholder="Cari nama, NIS, atau kelas">
+        </label>
+      </div>
+      <div class="tabel-bungkus">
+        <table>
+          <thead>
+            <tr><th scope="col">NIS</th><th scope="col">Nama</th><th scope="col">Kelas</th><th scope="col">Aksi</th></tr>
+          </thead>
+          <tbody id="daftar-siswa"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="app.js" defer></script>
+</body>
+</html>

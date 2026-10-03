@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portofolio | Adecya Silvina Argananta</title>
+  <meta name="description" content="Portofolio siswa SMKN 8 Jember: profil, project, pendidikan, dan kontak.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --kertas: #eef3f7;
+      --putih: #ffffff;
+      --tinta: #12263a;
+      --redup: #55677a;
+      --garis: #cfdae4;
+      --kobalt: #2547d0;
+      --kobalt-tua: #1a34a0;
+      --matahari: #f2b632;
+      --radius: 14px;
+      --font-judul: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+      --font-isi: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+    body {
+      font-family: var(--font-isi);
+      background: var(--kertas);
+      color: var(--tinta);
+      line-height: 1.65;
+      font-size: 1.0625rem;
+    }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--kobalt); outline-offset: 3px; border-radius: 4px; }
+    .wadah { width: min(1080px, 100% - 2.5rem); margin-inline: auto; }
+    h1, h2, h3 { font-family: var(--font-judul); line-height: 1.1; letter-spacing: -0.02em; }
+    h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); margin-bottom: 0.5rem; }
+    .bagian { padding: 5.5rem 0; }
+    .pengantar { color: var(--redup); max-width: 56ch; margin-bottom: 2.5rem; }
+
+    /* Navigasi */
+    header.atas {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(238, 243, 247, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--garis);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 64px; }
+    .logo { font-family: var(--font-judul); font-weight: 800; font-size: 1.2rem; text-decoration: none; }
+    .logo span { color: var(--kobalt); }
+    nav ul { display: flex; gap: 0.25rem; list-style: none; overflow-x: auto; }
+    nav a {
+      display: block; padding: 0.45rem 0.8rem; border-radius: 999px;
+      text-decoration: none; font-weight: 500; font-size: 0.95rem; white-space: nowrap;
+    }
+    nav a:hover { background: var(--putih); }
+
+    /* Beranda */
+    .beranda { padding: 4.5rem 0 5.5rem; }
+    .beranda-isi { display: grid; grid-template-columns: 1.25fr 1fr; gap: 3.5rem; align-items: center; }
+    .beranda h1 { font-size: clamp(2.6rem, 7vw, 4.6rem); font-weight: 800; margin-bottom: 1.25rem; }
+    .beranda p.sapaan { color: var(--redup); max-width: 48ch; margin-bottom: 2rem; font-size: 1.15rem; }
+    .tombol-baris { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .tombol {
+      display: inline-block; padding: 0.8rem 1.5rem; border-radius: 999px;
+      font-weight: 600; text-decoration: none; border: 2px solid var(--tinta);
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .tombol.utama { background: var(--kobalt); border-color: var(--kobalt); color: #fff; }
+    .tombol.utama:hover { background: var(--kobalt-tua); border-color: var(--kobalt-tua); }
+    .tombol.garis:hover { background: var(--tinta); color: #fff; }
+
+    /* Foto profil: bingkai lengkung dengan bayangan warna dan satu lingkaran aksen */
+    .foto-profil {
+      position: relative;
+      width: min(320px, calc(100% - 22px));
+      aspect-ratio: 4 / 5;
+      justify-self: center;
+      margin: 12px 0 20px 22px;
+    }
+    .foto-profil::before {
+      content: "";
+      position: absolute; inset: 0;
+      transform: translate(18px, 18px);
+      border-radius: 999px 999px 26px 26px;
+      background: var(--kobalt);
+      border: 2px solid var(--tinta);
+    }
+    .foto-isi {
+      position: relative; z-index: 1;
+      width: 100%; height: 100%;
+      border-radius: 999px 999px 26px 26px;
+      border: 2px solid var(--tinta);
+      background: #dce6f0;
+      display: grid; place-items: end center;
+      padding-bottom: 22%;
+      font-family: var(--font-judul); font-weight: 800; font-size: 4rem; color: var(--tinta);
+      overflow: hidden;
+    }
+    .foto-isi img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
+    }
+
+    /* Tentang saya */
+    .tentang-isi { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem; }
+    .tentang-isi p + p { margin-top: 1rem; }
+    .keahlian { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; align-content: flex-start; }
+    .keahlian li {
+      background: var(--putih); border: 1.5px solid var(--garis);
+      padding: 0.4rem 0.95rem; border-radius: 999px; font-weight: 500; font-size: 0.95rem;
+    }
+    .sub-judul { font-size: 1.15rem; margin-bottom: 0.9rem; }
+
+    /* Project */
+    .daftar-project { display: grid; gap: 1.25rem; }
+    .project {
+      background: var(--putih); border: 1.5px solid var(--garis); border-radius: var(--radius);
+      padding: 1.6rem; display: grid; grid-template-columns: 1fr auto; gap: 0.5rem 2rem; align-items: start;
+    }
+    .project h3 { font-size: 1.4rem; margin-bottom: 0.4rem; }
+    .project p { color: var(--redup); max-width: 62ch; }
+    .teknologi { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.9rem; }
+    .teknologi li { background: var(--kertas); padding: 0.15rem 0.65rem; border-radius: 6px; font-size: 0.85rem; font-weight: 500; }
+    .project .tautan { font-weight: 600; color: var(--kobalt); white-space: nowrap; }
+    .project .tautan:hover { color: var(--kobalt-tua); }
+    .project { position: relative; }
+    .project:hover { border-color: var(--kobalt); }
+    .project:focus-within { outline: 3px solid var(--kobalt); outline-offset: 3px; }
+    .project .tautan::after { content: ""; position: absolute; inset: 0; }
+
+    /* Garis waktu (pendidikan) */
+    .garis-waktu { list-style: none; position: relative; padding-left: 1.9rem; }
+    .garis-waktu::before {
+      content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--garis);
+    }
+    .garis-waktu li { position: relative; padding-bottom: 2rem; }
+    .garis-waktu li:last-child { padding-bottom: 0; }
+    .garis-waktu li::before {
+      content: ""; position: absolute; left: -1.9rem; top: 0.45rem;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--kertas); border: 3px solid var(--kobalt);
+    }
+    .garis-waktu li.sekarang::before { background: var(--matahari); border-color: var(--tinta); }
+    .waktu { font-size: 0.9rem; color: var(--redup); font-weight: 500; }
+    .garis-waktu h3 { font-size: 1.3rem; margin: 0.15rem 0 0.3rem; }
+    .garis-waktu p { color: var(--redup); max-width: 64ch; }
+    .garis-waktu ul.rincian { margin: 0.6rem 0 0 1.1rem; color: var(--redup); max-width: 64ch; }
+    .garis-waktu ul.rincian li { padding: 0; margin-bottom: 0.25rem; }
+    .garis-waktu ul.rincian li::before { display: none; }
+    .garis-waktu ul.rincian { position: static; }
+
+    .pendidikan-bagian { background: var(--putih); border-block: 1px solid var(--garis); }
+
+    /* Kontak */
+    .kontak-isi { display: grid; grid-template-columns: 1fr 1.1fr; gap: 3rem; }
+    .daftar-kontak { list-style: none; display: grid; gap: 1rem; }
+    .daftar-kontak span { display: block; font-size: 0.85rem; color: var(--redup); }
+    .daftar-kontak a { font-weight: 600; text-decoration-color: var(--matahari); text-underline-offset: 4px; text-decoration-thickness: 2px; }
+    form { background: var(--putih); border: 2px solid var(--tinta); border-radius: var(--radius); padding: 1.6rem; display: grid; gap: 1rem; }
+    label { font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 0.3rem; }
+    input, textarea {
+      width: 100%; font: inherit; color: inherit; background: var(--kertas);
+      border: 1.5px solid var(--garis); border-radius: 10px; padding: 0.7rem 0.9rem;
+    }
+    input:focus, textarea:focus { outline: none; border-color: var(--kobalt); box-shadow: 0 0 0 3px rgba(37, 71, 208, 0.2); }
+    textarea { min-height: 130px; resize: vertical; }
+    form button {
+      font: inherit; font-weight: 600; cursor: pointer; justify-self: start;
+      background: var(--kobalt); color: #fff; border: none; border-radius: 999px; padding: 0.8rem 1.8rem;
+    }
+    form button:hover { background: var(--kobalt-tua); }
+
+    footer { background: var(--tinta); color: #c7d3df; padding: 1.75rem 0; font-size: 0.95rem; }
+    footer .wadah { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+
+    /* Satu animasi saat halaman dibuka */
+    @keyframes masuk { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    .foto-profil { animation: masuk 0.7s ease-out both; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .foto-profil { animation: none; }
+    }
+
+    @media (max-width: 820px) {
+      .beranda-isi, .tentang-isi, .kontak-isi { grid-template-columns: 1fr; gap: 2.5rem; }
+      .project { grid-template-columns: 1fr; }
+      .bagian { padding: 4rem 0; }
+      .nav { height: auto; padding: 0.6rem 0; flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+      html { scroll-padding-top: 110px; }
+      .foto-profil { width: min(260px, calc(100% - 22px)); }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="atas">
+    <div class="wadah nav">
+      <a class="logo" href="#beranda">Adecya Silvina <span>Argananta</span></a>
+      <nav aria-label="Menu utama">
+        <ul>
+          <li><a href="#beranda">Beranda</a></li>
+          <li><a href="#tentang">Tentang saya</a></li>
+          <li><a href="#project">Project</a></li>
+          <li><a href="#pendidikan">Pendidikan</a></li>
+          <li><a href="#kontak">Kontak</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- BERANDA -->
+    <section class="beranda" id="beranda">
+      <div class="wadah beranda-isi">
+        <div>
+          <h1>Halo, saya Adecya Silvina Argananta.</h1>
+          <p class="sapaan">
+            Siswa Rekayasa Perangkat Lunak di SMKN 8 Jember yang berfokus pada pengembangan web application.
+            Terbiasa membangun aplikasi web interaktif dan responsif menggunakan PHP, Laravel, Tailwind CSS, dan MySQL.
+          </p>
+          <div class="tombol-baris">
+            <a class="tombol utama" href="#project">Lihat project</a>
+            <a class="tombol garis" href="#kontak">Hubungi saya</a>
+          </div>
+        </div>
+
+        <div class="foto-profil">
+          <div class="foto-isi">
+            <img src="fotoku.jpeg"alt="Foto Adecya Silvina Argananta">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TENTANG SAYA -->
+    <section class="bagian" id="tentang">
+      <div class="wadah">
+        <h2>Tentang saya</h2>
+        <p class="pengantar">Sedikit cerita tentang siapa saya dan apa yang saya kerjakan.</p>
+        <div class="tentang-isi">
+          <div>
+            <p>
+              Saya Adecya Silvina Argananta, lahir di Jember. Saat ini saya bersekolah di
+              SMKN 8 Jember dan sedang mendalami pemrograman web.
+            </p>
+            <p>
+              Saya senang belajar lewat praktik langsung: mencoba, salah, memperbaiki, lalu mencoba lagi.
+              Saya terbuka untuk kesempatan magang, kolaborasi project, dan belajar dari orang lain.
+            </p>
+          </div>
+          <div>
+            <h3 class="sub-judul">Keahlian</h3>
+            <ul class="keahlian">
+              <li>HTML &amp; CSS</li>
+              <li>PHP</li>
+              <li>JavaScript</li>
+              <li>MySQL</li>
+              <li>Git &amp; GitHub</li>
+              <li>Kerja tim</li>
+              <li>Laravel</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT -->
+    <section class="bagian" id="project" style="padding-top:0">
+      <div class="wadah">
+        <h2>Project</h2>
+        <p class="pengantar">Karya yang pernah saya buat, dari tugas sekolah sampai project pribadi.</p>
+        <div class="daftar-project">
+
+          <article class="project">
+            <div>
+              <h3>Website Portofolio Pribadi</h3>
+              <p>Website untuk memperkenalkan profil, karya, dan pengalaman saya. Dibuat responsif dan bisa dibuka nyaman di HP.</p>
+              <ul class="teknologi">
+                <li>HTML</li><li>CSS</li><li>PHP</li>
+              </ul>
+            </div>
+            <a class="tautan" href="#" aria-label="Buka project Website Portofolio Pribadi"></a>
+          </article>
+
+          <article class="project">
+            <div>
+              <h3>Aplikasi Manajemen Data Siswa</h3>
+              <p>Aplikasi untuk membantu pencatatan dan pengelolaan data siswa secara terstruktur.</p>
+              <ul class="teknologi">
+                <li>PHP</li><li>MySQL</li><li>Bootstrap</li>
+              </ul>
+            </div>
+            <a class="tautan" href="aplikasi-siswa/index.html" aria-label="Buka Aplikasi Manajemen Data Siswa"></a>
+          </article>
+
+          <article class="project">
+            <div>
+              <h3>Website SMKN 8 Jember</h3>
+              <p>Landing page sekolah dengan informasi profil dan program keahlian.</p>
+              <ul class="teknologi">
+                <li>JavaScript</li><li>CSS</li>
+              </ul>
+            </div>
+            <a class="tautan" href="sekolah/index.html" aria-label="Buka Website SMKN 8 Jember"></a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- PENDIDIKAN -->
+    <section class="bagian pendidikan-bagian" id="pendidikan">
+      <div class="wadah">
+        <h2>Pendidikan</h2>
+        <p class="pengantar">Perjalanan belajar saya sampai saat ini.</p>
+        <ol class="garis-waktu">
+          <li class="sekarang">
+            <span class="waktu">2025 sampai sekarang</span>
+            <h3>SMKN 8 Jember</h3>
+            <p>Jurusan Rekayasa Perangkat Lunak. Belajar pemrograman web dan mengerjakan project praktik di sekolah.</p>
+
+          </li>
+          <li>
+            <span class="waktu">2022 sampai 2025</span>
+            <h3>SMP Negeri 1 Umbulsari</h3>
+            <p>Lulusan tahun 2025 yang aktif membangun fondasi logika dan ketertarikan awal pada dunia pemrograman.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- KONTAK -->
+    <section class="bagian" id="kontak">
+      <div class="wadah">
+        <h2>Kontak</h2>
+        <p class="pengantar">Ada pertanyaan, tawaran kerja sama, atau sekadar ingin menyapa? Kirim pesan saja.</p>
+        <div class="kontak-isi">
+          <ul class="daftar-kontak">
+            <li><span>Email</span><a href="mailto:adecyasilvi10@gmail.com">adecyasilvi10@gmail.com</a></li>
+            <li><span>WhatsApp</span><a href="https://wa.me/6282142841303">0821-4284-1303</a></li>
+            <li><span>GitHub</span><a href="https://github.com/adecya18">github.com/adecya18</a></li>
+            <li><span>Instagram</span><a href="https://instagram.com/adecya18">@dcya.taa</a></li>
+            <li><span>Alamat</span>Jember, Jawa Timur</li>
+          </ul>
+
+          <form id="form-kontak" action="mailto:adecyasilvi10@gmail.com" method="post" enctype="text/plain">
+            <div>
+              <label for="nama">Nama</label>
+              <input type="text" id="nama" name="nama" required autocomplete="name">
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required autocomplete="email">
+            </div>
+            <div>
+              <label for="pesan">Pesan</label>
+              <textarea id="pesan" name="pesan" required></textarea>
+            </div>
+            <button type="submit">Kirim pesan</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wadah">
+      <span>&copy; <span id="tahun">2026</span> Adecya Silvina Argananta</span>
+      <span>Siswa SMKN 8 Jember</span>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

@@ -1,5 +1,26 @@
 document.getElementById("tahun").textContent = new Date().getFullYear();
 
+const menuToggle = document.querySelector(".menu-toggle");
+const menuNav = document.getElementById("menu-utama");
+
+if (menuToggle && menuNav) {
+  menuToggle.addEventListener("click", () => {
+    const isOpen = menuNav.classList.toggle("is-open");
+    menuToggle.classList.toggle("is-open", isOpen);
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  menuNav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      if (window.innerWidth <= 820) {
+        menuNav.classList.remove("is-open");
+        menuToggle.classList.remove("is-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  });
+}
+
 const formKontak = document.getElementById("form-kontak");
 const tujuanEmail = "adecyasilvi10@gmail.com";
 

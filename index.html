@@ -24,12 +24,14 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+    section[id] { scroll-margin-top: 90px; }
     body {
       font-family: var(--font-isi);
       background: var(--kertas);
       color: var(--tinta);
       line-height: 1.65;
       font-size: 1.0625rem;
+      overflow-x: hidden;
     }
     a { color: inherit; }
     :focus-visible { outline: 3px solid var(--kobalt); outline-offset: 3px; border-radius: 4px; }
@@ -55,6 +57,18 @@
       text-decoration: none; font-weight: 500; font-size: 0.95rem; white-space: nowrap;
     }
     nav a:hover { background: var(--putih); }
+    .menu-toggle {
+      display: none; width: 44px; height: 44px; border: 1.5px solid var(--garis);
+      border-radius: 12px; background: var(--putih); cursor: pointer; padding: 0.7rem 0.6rem;
+      flex-direction: column; justify-content: space-between; align-items: stretch;
+    }
+    .menu-toggle span {
+      display: block; height: 2px; border-radius: 999px; background: var(--tinta);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .menu-toggle.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .menu-toggle.is-open span:nth-child(2) { opacity: 0; }
+    .menu-toggle.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
     /* Beranda */
     .beranda { padding: 4.5rem 0 5.5rem; }
@@ -156,10 +170,20 @@
     .pendidikan-bagian { background: var(--putih); border-block: 1px solid var(--garis); }
 
     /* Kontak */
-    .kontak-isi { display: grid; grid-template-columns: 1fr 1.1fr; gap: 3rem; }
-    .daftar-kontak { list-style: none; display: grid; gap: 1rem; }
+    .kontak-isi { display: grid; grid-template-columns: 1fr 1.1fr; gap: 3rem; align-items: start; }
+    .kontak-isi > * { width: 100%; }
+    .daftar-kontak, .daftar-kontak li, form { min-width: 0; }
+    .daftar-kontak { list-style: none; display: grid; gap: 1rem; width: 100%; }
+    .daftar-kontak li {
+      background: var(--putih); border: 1.5px solid var(--garis); border-radius: 12px;
+      padding: 0.9rem 1rem; box-shadow: 0 6px 18px rgba(18, 38, 58, 0.04);
+      display: grid; gap: 0.25rem;
+    }
     .daftar-kontak span { display: block; font-size: 0.85rem; color: var(--redup); }
-    .daftar-kontak a { font-weight: 600; text-decoration-color: var(--matahari); text-underline-offset: 4px; text-decoration-thickness: 2px; }
+    .daftar-kontak a {
+      display: inline-block; max-width: 100%; font-weight: 600; text-decoration-color: var(--matahari);
+      text-underline-offset: 4px; text-decoration-thickness: 2px; overflow-wrap: anywhere; word-break: break-word;
+    }
     form { background: var(--putih); border: 2px solid var(--tinta); border-radius: var(--radius); padding: 1.6rem; display: grid; gap: 1rem; }
     label { font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 0.3rem; }
     input, textarea {
@@ -189,9 +213,20 @@
       .beranda-isi, .tentang-isi, .kontak-isi { grid-template-columns: 1fr; gap: 2.5rem; }
       .project { grid-template-columns: 1fr; }
       .bagian { padding: 4rem 0; }
-      .nav { height: auto; padding: 0.6rem 0; flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+      .nav { height: auto; padding: 0.6rem 0; flex-wrap: wrap; gap: 0.75rem; }
+      .menu-toggle { display: flex; margin-left: auto; }
+      nav { width: 100%; }
+      nav ul {
+        display: none; flex-direction: column; width: 100%; background: rgba(255,255,255,0.8);
+        border: 1px solid var(--garis); border-radius: 12px; padding: 0.5rem;
+      }
+      nav.is-open ul { display: flex; }
+      nav a { width: 100%; }
       html { scroll-padding-top: 110px; }
+      section[id] { scroll-margin-top: 110px; }
       .foto-profil { width: min(260px, calc(100% - 22px)); }
+      form { padding: 1.25rem; }
+      form button { width: 100%; justify-self: stretch; }
     }
   </style>
 </head>
@@ -200,7 +235,12 @@
   <header class="atas">
     <div class="wadah nav">
       <a class="logo" href="#beranda">Adecya Silvina <span>Argananta</span></a>
-      <nav aria-label="Menu utama">
+      <button class="menu-toggle" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="menu-utama">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="menu-utama" aria-label="Menu utama">
         <ul>
           <li><a href="#beranda">Beranda</a></li>
           <li><a href="#tentang">Tentang saya</a></li>
@@ -377,6 +417,6 @@
     </div>
   </footer>
 
-  <script src="script.js" defer></script>
+  <script src="script.js?v=20261003-2" defer></script>
 </body>
 </html>

@@ -377,17 +377,11 @@
     .sertifikat-item img {
       display: block;
       width: 100%;
-      height: 330px;
-      object-fit: cover;
-      object-position: center top;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
       background: #dfe8f2;
       border-bottom: 1px solid var(--garis);
-      transition: transform 0.35s ease;
-    }
-
-    .sertifikat-link:hover .sertifikat-item img,
-    .sertifikat-link:focus-visible .sertifikat-item img {
-      transform: scale(1.03);
     }
 
     .sertifikat-item::after {
